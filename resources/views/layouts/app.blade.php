@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Wifi Program Monitoring System</title>
+    <title>fwmps</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-100 min-h-screen">
 
     {{-- Header --}}
     <header class="bg-white shadow px-6 py-4 flex items-center justify-between">
-        <span class="font-bold text-blue-700 text-lg">Free Wifi Program Monitoring System</span>
+        <span class="font-bold text-blue-700 text-lg">FWPMS</span>
 
         <nav class="flex gap-6">
             <a href="{{ route('dashboard') }}"

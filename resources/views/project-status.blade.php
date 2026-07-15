@@ -29,7 +29,7 @@
             @endforeach
         </select>
 
-        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded text-sm">Filter</button>
+        <button type="submit" class="px-4 py-2 bg-e-600 text-white rounded text-sm">Filter</button>
         <a href="{{ route('project-status') }}" class="px-4 py-2 border rounded text-sm">Reset</a>
     </form>
 

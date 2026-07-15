@@ -7,3 +7,69 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+
+.ts-wrapper {
+    width: 120px;
+    flex-shrink: 0;
+}
+
+.ts-control {
+    border: 1px solid #10b981 !important;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: white;
+    font-size: 0.875rem;
+    height: 42px;
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    position:relative;
+}
+.ts-wrapper.single .ts-control::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-width: 6px 6px 0;
+    border-color: #10b981 transparent transparent;
+    right: 14px;
+}
+
+
+.ts-control.focus {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 2px rgba(16,185,129,0.2);
+}
+
+.ts-dropdown {
+    border-radius: 0.5rem;
+    border: 1px solid #d1d5db;
+    overflow: hidden;
+}
+
+.ts-dropdown .active {
+    background: #10b981 !important;
+    color: white;
+}
+
+.ts-dropdown .selected {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.ts-control input {
+    caret-color: transparent;
+}
+
+.ts-control .item {
+    max-width: calc(100% - 25px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+

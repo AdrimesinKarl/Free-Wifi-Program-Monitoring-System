@@ -8,8 +8,7 @@
         <div class="flex flex-wrap items-center gap-3">
             {{-- Filters --}}
             <form method="GET" action="{{ route('dashboard') }}" class="flex flex-wrap items-center gap-3">
-                <select name="province_id" onchange="this.form.submit()"
-                    class="border rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <select id="province_id" name="province_id" class="w-64"onchange="this.form.submit()">
                     <option value="">All Provinces</option>
                     @foreach($provinces as $province)
                         <option value="{{ $province->id }}" {{ $selectedProvince == $province->id ? 'selected' : '' }}>
@@ -17,9 +16,7 @@
                         </option>
                     @endforeach
                 </select>
-
-                <select name="status_id" onchange="this.form.submit()"
-                    class="border rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <select id="status_id" name="status_id" class="w-64" onchange="this.form.submit()">
                     <option value="">All Statuses</option>
                     @foreach($statuses as $status)
                         <option value="{{ $status->id }}" {{ $selectedStatus == $status->id ? 'selected' : '' }}>
@@ -34,12 +31,16 @@
         <form method="POST" action="{{ route('locations.upload') }}" enctype="multipart/form-data" class="flex items-center gap-3" id="uploadForm">
             @csrf
             <label for="csvFile" class="cursor-pointer">
-                <span class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors inline-block">
+                <span class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload-icon lucide-upload">
+                    <path d="M12 3v12"/><path d="m17 8-5-5-5 5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg>
+
                     Upload CSV
                 </span>
                 <input type="file" name="csv_file" id="csvFile" accept=".csv,.txt" class="hidden" onchange="document.getElementById('uploadForm').submit()">
             </label>
-        </form> 
+        </form>
     </div>
 
     {{-- Success Message --}}
@@ -56,32 +57,78 @@
     @enderror
 
     {{-- Summary Cards --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+
+    <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center justify-between mb-3">
             <p class="text-sm text-gray-500 font-medium">Total Sites</p>
-            <p class="text-3xl font-bold text-gray-900 mt-1">{{ $total }}</p>
+            <span class="bg-blue-50 text-blue-500 p-2 rounded-lg">
+                <i data-lucide="map-pin" class="w-4 h-4"></i>
+            </span>
         </div>
-        <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
-            <p class="text-sm text-gray-500 font-medium">Active</p>
-            <p class="text-3xl font-bold text-green-600 mt-1">{{ $active }}</p>
-        </div>
-        <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
-            <p class="text-sm text-gray-500 font-medium">For Renewal</p>
-            <p class="text-3xl font-bold text-yellow-500 mt-1">{{ $forRenewal }}</p>
-        </div>
-        <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
-            <p class="text-sm text-gray-500 font-medium">Terminated</p>
-            <p class="text-3xl font-bold text-red-500 mt-1">{{ $terminated }}</p>
-        </div>
+        <p class="text-3xl font-bold text-gray-900">{{ $total }}</p>
     </div>
 
-    {{-- Bar Chart --}}
-    <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-        <h2 class="text-base font-semibold text-gray-700 mb-4">
-            {{ $selectedProvince ? 'Sites per municipality' : 'Sites per province' }}
-        </h2>
-        <canvas id="wifiChart" height="100"></canvas>
+    <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center justify-between mb-3">
+            <p class="text-sm text-gray-500 font-medium">Active</p>
+            <span class="bg-green-50 text-green-500 p-2 rounded-lg">
+                <i data-lucide="circle-check" class="w-4 h-4"></i>
+            </span>
+        </div>
+        <p class="text-3xl font-bold text-green-600">{{ $active }}</p>
     </div>
+
+    <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center justify-between mb-3">
+            <p class="text-sm text-gray-500 font-medium">For Renewal</p>
+            <span class="bg-yellow-50 text-yellow-500 p-2 rounded-lg">
+                <i data-lucide="clock" class="w-4 h-4"></i>
+            </span>
+        </div>
+        <p class="text-3xl font-bold text-yellow-500">{{ $forRenewal }}</p>
+    </div>
+
+    <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center justify-between mb-3">
+            <p class="text-sm text-gray-500 font-medium">Terminated</p>
+            <span class="bg-red-50 text-red-500 p-2 rounded-lg">
+                <i data-lucide="circle-x" class="w-4 h-4"></i>
+            </span>
+        </div>
+        <p class="text-3xl font-bold text-red-500">{{ $terminated }}</p>
+    </div>
+
+</div>
+
+    {{-- ── Bar Chart ── --}}
+    <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+        <div class="flex items-center justify-between mb-1">
+            <h2 class="text-base font-semibold text-gray-700">
+                Locations per {{ $selectedProvince ? 'Municipality' : 'Province' }}
+            </h2>
+        </div>
+        <p class="text-sm text-gray-400 mb-4">
+            @if($selectedProvince)
+                Showing municipalities in
+                <strong>{{ $provinces->find($selectedProvince)?->name }}</strong>
+            @else
+                Showing all provinces
+            @endif
+            @if($selectedStatus)
+                &mdash; Status:
+                <strong>{{ $statuses->find($selectedStatus)?->name }}</strong>
+            @endif
+        </p>
+
+        <div id="locationChart" data-chart='@json($chartData)'></div>
+    </div>
+
+</div>
+
+@push('scripts')
+@vite(['resources/js/charts/wifiChart.js'])
+@endpush
 
     {{-- Reset Button --}}
     <div class="mt-4">
@@ -95,47 +142,3 @@
 </div>
 @endsection
 
-@push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    const ctx = document.getElementById('wifiChart');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: @json($chartData->pluck('label')),
-            datasets: [{
-                label: 'Wifi Sites',
-                data: @json($chartData->pluck('count')),
-                backgroundColor: '#3b82f6',
-                borderRadius: 6,
-                hoverBackgroundColor: '#2563eb'
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: { 
-                legend: { display: false },
-                tooltip: {
-                    backgroundColor: '#1f2937',
-                    titleFont: { size: 13 },
-                    bodyFont: { size: 12 },
-                    padding: 10,
-                    cornerRadius: 8
-                }
-            },
-            scales: { 
-                y: { 
-                    beginAtZero: true, 
-                    ticks: { stepSize: 1, font: { size: 11 } },
-                    grid: { color: '#f3f4f6' }
-                },
-                x: {
-                    grid: { display: false },
-                    ticks: { font: { size: 11 } }
-                }
-            }
-        }
-    });
-</script>
-@endpush

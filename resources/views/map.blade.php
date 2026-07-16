@@ -58,30 +58,5 @@
 @endsection
 
 @push('scripts')
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-    const map = L.map('map').setView([12.0, 122.0], 7);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
 
-    const markers = {};
-    const locations = @json($locations);
-
-    locations.forEach(loc => {
-        if (loc.latitude && loc.longitude) {
-            const marker = L.marker([loc.latitude, loc.longitude])
-                .addTo(map)
-                .bindPopup(`<strong>${loc.site_name}</strong><br>${loc.barangay}, ${loc.municipality?.name}`);
-            markers[loc.id] = marker;
-        }
-    });
-
-    function focusMarker(id) {
-        if (markers[id]) {
-            map.setView(markers[id].getLatLng(), 14);
-            markers[id].openPopup();
-        }
-    }
-</script>
 @endpush

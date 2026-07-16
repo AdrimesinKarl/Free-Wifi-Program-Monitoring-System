@@ -1,75 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap');
 @import 'tailwindcss';
-
+@import 'tom-select/dist/css/tom-select.css';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
 }
 
 
+/* =========================
+    TOM SELECT
+========================= */
+
 .ts-wrapper {
-    width: 120px;
+    width: 134px;
     flex-shrink: 0;
 }
 
+
+/* Control */
 .ts-control {
-    border: 1px solid #10b981 !important;
-    border-radius: 0.5rem;
+    border: 1px solid #DDD6FE !important;
+    border-radius: 0.875rem !important; /* rounded-xl */
     padding: 0.5rem 0.75rem;
-    background: white;
+
+    background: #FFFFFF;
+    color: #334155;
+
     font-size: 0.875rem;
-    height: 42px;
-    min-height: 42px;
+
+    height: 36px;
+    min-height: 36px;
+
     display: flex;
     align-items: center;
+
     overflow: hidden;
     white-space: nowrap;
-    position:relative;
+
+    position: relative;
+
+    transition: all 0.2s ease;
 }
+
+
+/* Dark mode */
+.dark .ts-control {
+    background: #0F172A;
+    color: #E2E8F0;
+    border-color: #334155 !important;
+}
+
+
+/* Arrow */
 .ts-wrapper.single .ts-control::after {
+
     content: '';
+
     position: absolute;
+
     top: 50%;
+    right: 14px;
+
     transform: translateY(-50%);
+
     width: 0;
     height: 0;
+
     border-width: 6px 6px 0;
-    border-color: #10b981 transparent transparent;
-    right: 14px;
+    border-style: solid;
+
+    border-color: #7C3AED transparent transparent;
 }
 
 
+
+/* Focus */
 .ts-control.focus {
-    border-color: #10b981 !important;
-    box-shadow: 0 0 0 2px rgba(16,185,129,0.2);
+
+    border-color: #7C3AED !important;
+
+    box-shadow:
+        0 0 0 3px rgba(124,58,237,0.15);
 }
 
+
+
+/* Dropdown */
 .ts-dropdown {
-    border-radius: 0.5rem;
-    border: 1px solid #d1d5db;
-    overflow: hidden;
+
+    margin-top: 6px;
+
+    background: white;
+
+    border: 1px solid #E2E8F0;
+
+    border-radius: 0.875rem !important;
+
+    overflow: hidden !important;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.08);
+
 }
 
-.ts-dropdown .active {
-    background: #10b981 !important;
-    color: white;
+
+/* Dark dropdown */
+.dark .ts-dropdown {
+
+    background: #0F172A;
+
+    border-color: #334155;
+
 }
 
-.ts-dropdown .selected {
-    background: #d1fae5;
-    color: #065f46;
+
+
+/* Options */
+.ts-dropdown .option {
+
+    padding: 10px 12px;
+
+    color: #334155;
+
+    cursor: pointer;
+
 }
 
+
+
+/* Dark options */
+.dark .ts-dropdown .option {
+
+    color: #E2E8F0;
+
+}
+
+
+
+/* Hover */
+.ts-dropdown .option.active {
+
+    background: #EDE9FE !important;
+
+    color: #5B21B6 !important;
+
+}
+
+
+
+.dark .ts-dropdown .option.active {
+
+    background: #4C1D95 !important;
+
+    color: #F5F3FF !important;
+
+}
+
+
+
+/* Selected */
+.ts-dropdown .option.selected {
+
+    background: #F5F3FF;
+
+    color: #6D28D9;
+
+}
+
+
+
+.dark .ts-dropdown .option.selected {
+
+    background: #312E81;
+
+    color: #EDE9FE;
+
+}
+
+
+
+/* Selected + Hover */
+.ts-dropdown .option.active.selected {
+
+    background: #DDD6FE !important;
+
+    color: #4C1D95 !important;
+
+}
+
+
+
+.dark .ts-dropdown .option.active.selected {
+
+    background: #5B21B6 !important;
+
+    color: white !important;
+
+}
+
+
+
+/* Input */
 .ts-control input {
+
     caret-color: transparent;
+
 }
 
+
+
+/* Text overflow */
 .ts-control .item {
-    max-width: calc(100% - 25px);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
 
+    max-width: calc(100% - 25px);
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}

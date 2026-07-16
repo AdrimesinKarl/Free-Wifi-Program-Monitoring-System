@@ -21,11 +21,11 @@
 
 /* Control */
 .ts-control {
-    border: 1px solid #DDD6FE !important;
-    border-radius: 0.875rem !important; /* rounded-xl */
+    border: 1px solid #E2E8F0 !important; /* lighter border for light mode */
+    border-radius: 0.875rem !important;
     padding: 0.5rem 0.75rem;
 
-    background: #FFFFFF;
+    background: #ffffff; /* white — matches card */
     color: #334155;
 
     font-size: 0.875rem;
@@ -44,10 +44,9 @@
     transition: all 0.2s ease;
 }
 
-
 /* Dark mode */
 .dark .ts-control {
-    background: #0F172A;
+    background: #0F172A; /* slate-900 — matches dark card */
     color: #E2E8F0;
     border-color: #334155 !important;
 }
@@ -222,4 +221,11 @@
 
     white-space: nowrap;
 
+}
+
+/* Keep dark background when item selected in dark mode */
+.dark .ts-control,
+.dark .ts-control.focus,
+.dark .ts-wrapper.has-items .ts-control {
+    background: #0F172A !important;
 }

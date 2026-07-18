@@ -18,11 +18,19 @@
     <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-30 w-56 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col shadow-sm -translate-x-full lg:translate-x-0 transition-transform duration-200">
 
         {{-- Brand --}}
-        <div class="px-5 py-5 border-b border-slate-200 dark:border-slate-800">
+    <div class="px-5 py-5 border-b border-slate-200 dark:border-slate-800">
+        <div class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wifi shrink-0 text-slate-900 dark:text-slate-100">
+                <path d="M12 20h.01"/>
+                <path d="M2 8.82a15 15 0 0 1 20 0"/>
+                <path d="M5 12.859a10 10 0 0 1 14 0"/>
+                <path d="M8.5 16.429a5 5 0 0 1 7 0"/>
+            </svg><br>
             <span class="font-bold text-slate-900 dark:text-slate-100 text-base leading-tight">
-                Free WiFi<br>Management
+            Free Wifi<br>Monitoring System
             </span>
-        </div>
+    </div>
+    </div>
 
         {{-- Navigation --}}
         <nav class="flex flex-col gap-1 p-3 flex-1">
@@ -50,7 +58,7 @@
                     <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
                     <circle cx="12" cy="10" r="3"/>
                 </svg>
-                Map
+                Location Mapping
             </a>
 
             <a href="{{ route('project-status') }}"
@@ -63,26 +71,9 @@
                     <path d="M12 8v4"/>
                     <path d="M12 16h.01"/>
                 </svg>
-                Status
+                Project Status
             </a>
-
         </nav>
-
-        {{-- Dark Mode Toggle --}}
-        <div class="p-3 border-t border-slate-200 dark:border-slate-800">
-            <button id="theme-toggle"
-                class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
-                </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="4"/>
-                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-                </svg>
-                <span class="dark:hidden">Dark Mode</span>
-                <span class="hidden dark:block">Light Mode</span>
-            </button>
-        </div>
 
     </aside>
 
@@ -93,13 +84,20 @@
         <header class="lg:hidden flex items-center gap-4 px-4 py-3 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm">
             <button onclick="toggleSidebar()" class="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                 {{-- Hamburger --}}
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="4" y1="6" x2="20" y2="6"/>
                     <line x1="4" y1="12" x2="20" y2="12"/>
                     <line x1="4" y1="18" x2="20" y2="18"/>
                 </svg>
             </button>
-            <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">Free WiFi Management</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wifi shrink-0 text-slate-900 dark:text-slate-100">
+                <path d="M12 20h.01"/>
+                <path d="M2 8.82a15 15 0 0 1 20 0"/>
+                <path d="M5 12.859a10 10 0 0 1 14 0"/>
+                <path d="M8.5 16.429a5 5 0 0 1 7 0"/>
+
+            </svg>
+            <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">Free Wifi Monitoring System </span>
         </header>
 
         {{-- Page Content --}}

@@ -2,6 +2,12 @@
 
 @section('content')
 
+{{-- Page Header --}}
+<div class="mb-6">
+    <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Dashboard</h1>
+    <p class="text-slate-500 dark:text-slate-400">Welcome to the Free WiFi Monitoring dashboard</p>
+</div>
+
 {{-- Action Buttons --}}
 <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
 
@@ -87,9 +93,9 @@
 @enderror
     
 {{-- Summary Cards --}}
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
 
-    <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm hover:shadow-md transition-shadow">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm hover:shadow-md transition-shadow">
         <div class="flex items-center justify-between mb-3">
             <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Total Sites</p>
             <span class="bg-violet-50 dark:bg-violet-950 text-violet-600 dark:text-violet-400 p-2 rounded-lg">
@@ -102,7 +108,7 @@
         <p class="text-3xl font-bold text-slate-900 dark:text-slate-100">{{ $total }}</p>
     </div>
 
-    <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm hover:shadow-md transition-shadow">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm hover:shadow-md transition-shadow">
         <div class="flex items-center justify-between mb-3">
             <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Active</p>
             <span class="bg-green-50 dark:bg-green-950 text-green-600 dark:text-green-400 p-2 rounded-lg">
@@ -115,7 +121,7 @@
         <p class="text-3xl font-bold text-green-600 dark:text-green-400">{{ $active }}</p>
     </div>
 
-    <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm hover:shadow-md transition-shadow">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm hover:shadow-md transition-shadow">
         <div class="flex items-center justify-between mb-3">
             <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">For Renewal</p>
             <span class="bg-yellow-50 dark:bg-yellow-950 text-yellow-600 dark:text-yellow-400 p-2 rounded-lg">
@@ -128,7 +134,7 @@
         <p class="text-3xl font-bold text-yellow-500 dark:text-yellow-400">{{ $forRenewal }}</p>
     </div>
 
-    <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm hover:shadow-md transition-shadow">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm hover:shadow-md transition-shadow">
         <div class="flex items-center justify-between mb-3">
             <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Terminated</p>
             <span class="bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400 p-2 rounded-lg">
@@ -146,8 +152,7 @@
 
 
 {{-- ── Bar Chart ── --}}
-<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
-
+<div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 hover:shadow-md transition-shadow">
     <div class="flex items-center justify-between mb-1">
         <h2 class="text-base font-semibold text-slate-800 dark:text-slate-100">
             Locations per {{ $selectedProvince ? 'Municipality' : 'Province' }}
@@ -181,7 +186,7 @@
 @endpush
 
     {{-- Reset Button --}}
-    <div class="mt-4">
+    <div class="mt-4 flex justify-end">
         <form method="POST" action="{{ route('locations.reset') }}" onsubmit="return confirm('Reset all locations? This cannot be undone.')" class="inline">
             @csrf
             <button type="submit"

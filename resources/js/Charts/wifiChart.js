@@ -10,27 +10,19 @@ function renderWifiChart() {
     const categories = chartData.map(d => d.label);
     const counts = chartData.map(d => d.count);
 
-    const isDark = document.documentElement.classList.contains('dark');
-
-    // Switch to horizontal when many locations
     const isHorizontal = categories.length > 6;
 
-
-    const maxValue = Math.max(...counts);
+    const maxValue = Math.max(...counts, 0);
     const yAxisMax = maxValue + Math.max(Math.ceil(maxValue * 0.25), 2);
 
-
-    // Remove old chart before redraw
     if (chart) {
         chart.destroy();
     }
-
 
     const options = {
 
         chart: {
             type: 'bar',
-
             height: isHorizontal
                 ? Math.max(360, categories.length * 40)
                 : 360,
@@ -49,65 +41,37 @@ function renderWifiChart() {
             background: 'transparent',
         },
 
+        series: [{
+            name: 'Locations',
+            data: counts,
+        }],
 
-        theme: {
-            mode: isDark ? 'dark' : 'light',
-        },
-
-
-        series: [
-            {
-                name: 'Locations',
-                data: counts,
-            }
-        ],
-
+        colors: ['#7C3AED'],
 
         plotOptions: {
-
             bar: {
-
                 horizontal: isHorizontal,
-
                 borderRadius: 8,
-
                 columnWidth: '45%',
-
                 barHeight: '55%',
             }
-
         },
 
-
-        // Remove numbers on bars
         dataLabels: {
             enabled: false,
         },
 
-
         xaxis: {
-
             categories: categories,
 
             labels: {
-
                 rotate: 0,
-
                 trim: true,
-
                 style: {
-
                     fontSize: '12px',
-
                     fontWeight: 500,
-
-                    colors: isDark
-                        ? '#94A3B8'
-                        : '#64748B',
-                },
-
+                }
             },
-
 
             axisBorder: {
                 show: false
@@ -116,102 +80,44 @@ function renderWifiChart() {
             axisTicks: {
                 show: false
             },
-
         },
 
-
         yaxis: {
-
             max: yAxisMax,
 
             labels: {
-
                 formatter: val => Math.round(val),
-
                 style: {
-
-                    colors: isDark
-                        ? '#94A3B8'
-                        : '#64748B',
-
+                    colors: '#64748B',
                     fontSize: '12px',
-                },
-
-            },
-
+                }
+            }
         },
-
-
-        colors: [
-
-            isDark
-                ? '#A78BFA'
-                : '#7C3AED'
-
-        ],
-
 
         grid: {
-
-            borderColor: isDark
-                ? '#1E293B'
-                : '#EDE9FE',
-
+            borderColor: '#EDE9FE',
             strokeDashArray: 4,
-
         },
-
 
         tooltip: {
-
-            theme: isDark
-                ? 'dark'
-                : 'light',
-
+            theme: 'light',
             y: {
-
-                formatter: val =>
-                    val + ' location(s)',
-
-            },
-
+                formatter: val => `${val} location(s)`
+            }
         },
-
 
         noData: {
-
             text: 'No locations found for the selected filters.',
-
             style: {
-
                 color: '#94A3B8',
-
                 fontSize: '14px',
-
-            },
-
-        },
-
+            }
+        }
 
     };
 
-
     chart = new ApexCharts(el, options);
-
     chart.render();
-
 }
 
-
-// Initial render
-document.addEventListener(
-    'DOMContentLoaded',
-    renderWifiChart
-);
-
-
-// Redraw after dark/light toggle
-window.addEventListener(
-    'themeChanged',
-    renderWifiChart
-);
+document.addEventListener('DOMContentLoaded', renderWifiChart);

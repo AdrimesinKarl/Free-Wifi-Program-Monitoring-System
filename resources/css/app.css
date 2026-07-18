@@ -8,25 +8,22 @@
     --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
 }
 
-
-/* =========================
-    TOM SELECT
-========================= */
-
 .ts-wrapper {
     width: 134px;
     flex-shrink: 0;
 }
 
+/* =========================
+   Control
+========================= */
 
-/* Control */
 .ts-control {
-    border: 1px solid #E2E8F0 !important; /* lighter border for light mode */
+    border: 1px solid #334155 !important;
     border-radius: 0.875rem !important;
     padding: 0.5rem 0.75rem;
 
-    background: #ffffff; /* white — matches card */
-    color: #334155;
+    background: #0F172A;
+    color: #E2E8F0;
 
     font-size: 0.875rem;
 
@@ -44,18 +41,13 @@
     transition: all 0.2s ease;
 }
 
-/* Dark mode */
-.dark .ts-control {
-    background: #0F172A; /* slate-900 — matches dark card */
-    color: #E2E8F0;
-    border-color: #334155 !important;
-}
+/* =========================
+   Arrow
+========================= */
 
-
-/* Arrow */
 .ts-wrapper.single .ts-control::after {
 
-    content: '';
+    content: "";
 
     position: absolute;
 
@@ -73,144 +65,94 @@
     border-color: #7C3AED transparent transparent;
 }
 
+/* =========================
+   Focus
+========================= */
 
-
-/* Focus */
 .ts-control.focus {
-
     border-color: #7C3AED !important;
-
-    box-shadow:
-        0 0 0 3px rgba(124,58,237,0.15);
+    background: #0F172A !important;
+    box-shadow: 0 0 0 3px rgba(124,58,237,.15);
 }
 
+/* =========================
+   Dropdown
+========================= */
 
-
-/* Dropdown */
 .ts-dropdown {
 
     margin-top: 6px;
 
-    background: white;
+    background: #0F172A;
 
-    border: 1px solid #E2E8F0;
+    border: 1px solid #334155;
 
     border-radius: 0.875rem !important;
 
     overflow: hidden !important;
 
-    box-shadow:
-        0 10px 25px rgba(0,0,0,0.08);
-
+    box-shadow: 0 10px 25px rgba(0,0,0,.25);
 }
 
+/* =========================
+   Options
+========================= */
 
-/* Dark dropdown */
-.dark .ts-dropdown {
-
-    background: #0F172A;
-
-    border-color: #334155;
-
-}
-
-
-
-/* Options */
 .ts-dropdown .option {
 
     padding: 10px 12px;
 
-    color: #334155;
+    color: #E2E8F0;
+
+    background: transparent;
 
     cursor: pointer;
 
+    transition: all .15s ease;
 }
-
-
-
-/* Dark options */
-.dark .ts-dropdown .option {
-
-    color: #E2E8F0;
-
-}
-
-
 
 /* Hover */
+
 .ts-dropdown .option.active {
 
-    background: #EDE9FE !important;
+    background: #1E293B !important;
 
-    color: #5B21B6 !important;
-
+    color: #A78BFA !important;
 }
-
-
-
-.dark .ts-dropdown .option.active {
-
-    background: #4C1D95 !important;
-
-    color: #F5F3FF !important;
-
-}
-
-
 
 /* Selected */
+
 .ts-dropdown .option.selected {
 
-    background: #F5F3FF;
+    background: #312E81 !important;
 
-    color: #6D28D9;
+    color: #EDE9FE !important;
 
+    font-weight: 600;
 }
-
-
-
-.dark .ts-dropdown .option.selected {
-
-    background: #312E81;
-
-    color: #EDE9FE;
-
-}
-
-
 
 /* Selected + Hover */
+
 .ts-dropdown .option.active.selected {
-
-    background: #DDD6FE !important;
-
-    color: #4C1D95 !important;
-
-}
-
-
-
-.dark .ts-dropdown .option.active.selected {
 
     background: #5B21B6 !important;
 
     color: white !important;
-
 }
 
+/* =========================
+   Input
+========================= */
 
-
-/* Input */
 .ts-control input {
 
     caret-color: transparent;
-
 }
 
+/* =========================
+   Text overflow
+========================= */
 
-
-/* Text overflow */
 .ts-control .item {
 
     max-width: calc(100% - 25px);
@@ -220,12 +162,34 @@
     text-overflow: ellipsis;
 
     white-space: nowrap;
-
 }
 
-/* Keep dark background when item selected in dark mode */
-.dark .ts-control,
-.dark .ts-control.focus,
-.dark .ts-wrapper.has-items .ts-control {
+/* =========================
+Hide Scrollbar
+ */
+
+.ts-dropdown-content {
+
+    overflow-y: auto;
+
+    scrollbar-width: none;
+
+    -ms-overflow-style: none;
+}
+
+.ts-dropdown-content::-webkit-scrollbar {
+
+    display: none;
+}
+
+/* Remove default background from the selected item */
+.ts-wrapper.single .ts-control > .item {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Keep dark background when item is selected */
+.ts-wrapper.single.has-items .ts-control {
     background: #0F172A !important;
 }

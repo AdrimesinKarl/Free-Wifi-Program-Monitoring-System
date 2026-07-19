@@ -24,6 +24,7 @@ class Location extends Model
         'longitude'    => 'decimal:7',
     ];
 
+    protected $with = ['province', 'municipality', 'status'];
     public function province(): BelongsTo
     {
         return $this->belongsTo(Province::class);

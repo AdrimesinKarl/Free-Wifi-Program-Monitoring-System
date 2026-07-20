@@ -143,8 +143,10 @@
             </strong>
         @endif
     </p>
-    <div id="locationChart" data-chart='@json($chartData)'></div>
+    <div id="locationChart" data-chart='@json($chartData)'>
+
 </div>
+
 
 @push('scripts')
 @vite(['resources/js/charts/wifiChart.js'])

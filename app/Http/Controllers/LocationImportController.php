@@ -36,7 +36,8 @@ class LocationImportController extends Controller
 
     public function reset()
     {
-        Location::truncate();
-        return back()->with('success', 'All locations have been reset.');
+        Location::query()->delete();
+    
+        return redirect()->route('dashboard')->with('success', 'All locations have been reset.');
     }
 }

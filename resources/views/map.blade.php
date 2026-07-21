@@ -300,16 +300,12 @@
 
 
 
-                {{-- Map --}}
-                <div
-
-                    id="map"
-
-                    class="h-[400px] sm:h-[500px] lg:h-[600px]
-
-                    data-locations='@json($locations)'>
-
-                </div>
+    {{-- Map --}}
+    <div
+        id="map"
+        class="h-[400px] sm:h-[500px] lg:h-[600px]"
+        data-locations='@json($locations)'>
+    </div>
 
 
 

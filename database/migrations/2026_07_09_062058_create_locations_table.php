@@ -19,8 +19,8 @@ return new class extends Migration
         $table->foreignId('status_id')->constrained();
         $table->decimal('latitude', 10, 7)->nullable();
         $table->decimal('longitude', 10, 7)->nullable();
-        $table->date('start_date')->nullable();
-        $table->date('renewal_date')->nullable();
+       // $table->date('start_date')->nullable();
+       // $table->date('renewal_date')->nullable();
         $table->timestamps();
 });
     }

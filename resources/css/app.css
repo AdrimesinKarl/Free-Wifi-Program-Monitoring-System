@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap');
 @import 'tailwindcss';
 @import 'tom-select/dist/css/tom-select.css';
+@import 'leaflet/dist/leaflet.css';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
@@ -192,4 +193,13 @@ Hide Scrollbar
 /* Keep dark background when item is selected */
 .ts-wrapper.single.has-items .ts-control {
     background: #0F172A !important;
+}
+
+#map_province_id + .ts-wrapper {
+    width: 12rem;
+}
+
+#map {
+    height: 600px;
+    width: 100%;
 }

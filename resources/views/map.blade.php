@@ -1,62 +1,329 @@
 @extends('layouts.app')
 
-@push('styles')
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<style>
-    #map { height: 600px; border-radius: 12px; }
-</style>
-@endpush
-
 @section('content')
-<div class="max-w-7xl mx-auto px-4 py-6">
 
-    {{-- Province filter --}}
-    <form method="GET" action="{{ route('map') }}" class="mb-4">
-        <select name="province_id" onchange="this.form.submit()" class="border rounded px-3 py-2 text-sm">
-            <option value="">Select Province</option>
+<div class="max-w-7xl mx-auto">
+
+    {{-- Page Header --}}
+    <div class="mb-6">
+
+        <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100">
+            Location Mapping
+        </h1>
+
+        <p class="text-slate-500 dark:text-slate-400">
+            View FreeWiFi locations on an interactive map.
+        </p>
+
+    </div>
+
+
+    {{-- Province Filter --}}
+    <form method="GET"
+          action="{{ route('map') }}"
+          class="flex flex-wrap items-center gap-3 mb-6">
+
+
+        <select
+            id="map_province_id"
+            name="province_id"
+            class="w-64"
+            onchange="this.form.submit()">
+
+            <option value="">
+                Select Province
+            </option>
+
+
             @foreach($provinces as $province)
-                <option value="{{ $province->id }}"
+
+                <option
+                    value="{{ $province->id }}"
                     {{ $selectedProvince == $province->id ? 'selected' : '' }}>
+
                     {{ $province->name }}
+
                 </option>
+
             @endforeach
+
+
         </select>
+
+
     </form>
 
-    <div class="flex gap-4">
-        {{-- Left: location list --}}
-        <div class="w-1/3 bg-white rounded-xl border overflow-y-auto" style="max-height:600px">
-            <table class="w-full text-sm">
-                <thead class="bg-gray-50 sticky top-0">
-                    <tr>
-                        <th class="text-left px-3 py-2">Site</th>
-                        <th class="text-left px-3 py-2">Brgy</th>
-                        <th class="text-left px-3 py-2">Municipality</th>
-                    </tr>
-                </thead>
-                <tbody>
+
+
+    {{-- Content --}}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+
+        {{-- Location List --}}
+        <div class="bg-white dark:bg-slate-900 
+                    rounded-2xl 
+                    border border-slate-200 dark:border-slate-800
+                    shadow-sm
+                    overflow-hidden">
+
+
+            {{-- Header --}}
+            <div class="px-5 py-4 border-b border-slate-200 dark:border-slate-800">
+
+
+                <h2 class="font-semibold text-slate-900 dark:text-slate-100">
+                    Locations
+                </h2>
+
+
+                <p class="text-sm text-slate-500 dark:text-slate-400">
+                    {{ count($locations) }} sites found
+                </p>
+
+
+            </div>
+
+
+
+            {{-- Table --}}
+            <div class="overflow-y-auto"
+                 style="max-height:520px">
+
+
+                <table class="w-full text-sm">
+
+
+                    <thead class="bg-slate-50 dark:bg-slate-800 sticky top-0">
+
+                        <tr>
+
+                            <th class="px-4 py-3 text-left text-slate-600 dark:text-slate-300">
+                                Site
+                            </th>
+
+                            <th class="px-4 py-3 text-left text-slate-600 dark:text-slate-300">
+                                Barangay
+                            </th>
+
+                            <th class="px-4 py-3 text-left text-slate-600 dark:text-slate-300">
+                                Municipality
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+
+                    <tbody>
+
+
                     @forelse($locations as $loc)
-                    <tr class="border-t hover:bg-gray-50 cursor-pointer"
-                        onclick="focusMarker({{ $loc->id }})">
-                        <td class="px-3 py-2">{{ $loc->site_name }}</td>
-                        <td class="px-3 py-2">{{ $loc->barangay }}</td>
-                        <td class="px-3 py-2">{{ $loc->municipality->name }}</td>
-                    </tr>
+
+
+                        <tr
+
+                            data-location-row="{{ $loc->id }}"
+
+                            onclick="focusMarker({{ $loc->id }})"
+
+                            class="
+                            border-t border-slate-100
+                            dark:border-slate-800
+
+                            hover:bg-slate-50
+                            dark:hover:bg-slate-800
+
+                            cursor-pointer
+                            transition
+                            ">
+
+
+                            <td class="
+                                px-4 py-3
+                                font-medium
+                                text-slate-900
+                                dark:text-slate-100">
+
+                                {{ $loc->site_name }}
+
+                            </td>
+
+
+
+                            <td class="
+                                px-4 py-3
+                                text-slate-600
+                                dark:text-slate-400">
+
+                                {{ $loc->barangay }}
+
+                            </td>
+
+
+
+                            <td class="
+                                px-4 py-3
+                                text-slate-600
+                                dark:text-slate-400">
+
+                                {{ $loc->municipality->name }}
+
+                            </td>
+
+
+                        </tr>
+
+
                     @empty
-                    <tr><td colspan="3" class="px-3 py-4 text-center text-gray-400">Select a province</td></tr>
+
+
+                        <tr>
+
+                            <td colspan="3"
+                                class="px-4 py-12 text-center text-slate-400">
+
+                                No locations found.
+
+                            </td>
+
+                        </tr>
+
+
                     @endforelse
-                </tbody>
-            </table>
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
         </div>
 
-        {{-- Right: map --}}
-        <div class="flex-1">
-            <div id="map"></div>
+
+
+
+        {{-- Map --}}
+        <div class="lg:col-span-2">
+
+
+            <div class="
+                bg-white
+                dark:bg-slate-900
+
+                rounded-2xl
+
+                border
+                border-slate-200
+                dark:border-slate-800
+
+                shadow-sm
+
+                overflow-hidden">
+
+
+                {{-- Map Header --}}
+                <div class="
+                    px-5
+                    py-4
+
+                    border-b
+                    border-slate-200
+                    dark:border-slate-800
+
+                    flex
+                    items-center
+                    justify-between">
+
+
+                    <div>
+
+
+                        <h2 class="
+                            font-semibold
+                            text-slate-900
+                            dark:text-slate-100">
+
+                            Map View
+
+                        </h2>
+
+
+                        <p class="
+                            text-sm
+                            text-slate-500
+                            dark:text-slate-400">
+
+                            Click a location to view details.
+
+                        </p>
+
+
+                    </div>
+
+
+
+                    <button
+
+                        id="resetMap"
+
+                        type="button"
+
+                        class="
+                        px-3
+                        py-2
+
+                        text-sm
+
+                        rounded-lg
+
+                        border
+                        border-slate-300
+                        dark:border-slate-700
+
+                        hover:bg-slate-100
+                        dark:hover:bg-slate-800
+
+                        transition">
+
+                        Reset View
+
+                    </button>
+
+
+                </div>
+
+
+
+
+                {{-- Map --}}
+                <div
+
+                    id="map"
+
+                    class="h-[400px] sm:h-[500px] lg:h-[600px]
+
+                    data-locations='@json($locations)'>
+
+                </div>
+
+
+
+            </div>
+
+
         </div>
+
+
+
     </div>
+
+
 </div>
+
+
 @endsection
-
-@push('scripts')
-
-@endpush

@@ -41,8 +41,8 @@ class LocationsImport implements ToModel, WithHeadingRow, WithValidation, WithCh
                 'status_id'       => $status->id,
                 'latitude'        => $row['latitude']     ?? null,
                 'longitude'       => $row['longitude']    ?? null,
-                'start_date'      => $row['start_date']   ?? null,
-                'renewal_date'    => $row['renewal_date'] ?? null,
+                //'start_date'      => $row['start_date']   ?? null,
+                //'renewal_date'    => $row['renewal_date'] ?? null,
             ]
         );
     }

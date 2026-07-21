@@ -7,7 +7,7 @@
 {{-- Page Header --}}
 <div class="mb-6">
     <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Dashboard</h1>
-    <p class="text-slate-500 dark:text-slate-400">Welcome to the Free WiFi Monitoring dashboard</p>
+    <p class="text-slate-500 dark:text-slate-400">Welcome to the Free WiFi Program Monitoring dashboard</p>
 </div>
 
 {{-- Action Buttons --}}

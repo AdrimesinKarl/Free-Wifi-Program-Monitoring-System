@@ -13,13 +13,13 @@ class Location extends Model
         'status_id',
         'latitude',
         'longitude',
-        'start_date',
-        'renewal_date',
+        //'start_date',
+        //'renewal_date',
         ];
 
     protected $casts = [
-        'start_date'   => 'date',
-        'renewal_date' => 'date',
+        //'start_date'   => 'date',
+        //'renewal_date' => 'date',
         'latitude'     => 'decimal:7',
         'longitude'    => 'decimal:7',
     ];

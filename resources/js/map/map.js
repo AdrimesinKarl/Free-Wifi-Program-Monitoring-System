@@ -115,36 +115,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    // ---------------------------
-    // Reset View Button
-    // ---------------------------
+// ---------------------------
+// Reset Button
+// ---------------------------
 
-    const resetButton = document.querySelector('#resetMap');
+const resetButton = document.querySelector('#resetMap');
 
-    if (resetButton) {
+if (resetButton) {
 
-        resetButton.addEventListener('click', () => {
+    resetButton.addEventListener('click', () => {
 
-            if (bounds.length) {
+        // Close any open popup
+        map.closePopup();
 
-                map.fitBounds(bounds, {
-                    padding: [40, 40]
-                });
+        // Reset map view
+        if (bounds.length) {
+            map.fitBounds(bounds, {
+                padding: [40, 40]
+            });
+        }
 
-            }
+        // Remove highlighted row
+        document
+            .querySelectorAll('[data-location-row]')
+            .forEach(row => {
+                row.classList.remove(
+                    'bg-violet-50',
+                    'dark:bg-violet-950'
+                );
+            });
 
-            document
-                .querySelectorAll('[data-location-row]')
-                .forEach(row => {
-                    row.classList.remove(
-                        'bg-violet-50',
-                        'dark:bg-violet-950'
-                    );
-                });
+    });
 
-        });
-
-    }
+}
 
     // ---------------------------
     // Focus Marker

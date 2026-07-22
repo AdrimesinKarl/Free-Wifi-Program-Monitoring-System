@@ -1,58 +1,255 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Free Wifi Program Monitoring System (FWPMS)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A web-based system developed to monitor and manage Free Wifi Program locations.  
+The system provides dashboard analytics, location management, location mapping, and project status monitoring.
 
-## About Laravel
+# 1. System Requirements
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Before installing the system, make sure the computer has the following installed:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Required Software
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Laravel Herd
+- PHP 8.2 or higher
+- Composer
+- Node.js
+- NPM
+- TablePlus
+- MYSQL
 
-## Learning Laravel
+# 2. Project Setup
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Step 1: Copy the Project
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Copy the project folder to your computer.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+Example:
 
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```
+C:\Users\YourName\Herd\freewifi-monitoring-system
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Open the project folder using Terminal or Command Prompt.
 
-## Contributing
+# Step 3: Install Laravel Dependencies
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Run:
 
-## Code of Conduct
+```bash
+composer install
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+This will install all required Laravel packages.
 
-## Security Vulnerabilities
+# Step 4: Install Frontend Dependencies
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Run:
 
-## License
+```bash
+npm install
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This will install frontend packages required by Vite.
+
+# Step 5: Configure Environment File
+
+Create the environment file:
+
+```bash
+cp .env.example .env
+```
+
+Generate Laravel application key:
+
+```bash
+php artisan key:generate
+```
+
+---
+
+# Step 6: Configure Database Using TablePlus
+
+Open **TablePlus**.
+
+Create a new MySQL database:
+
+```
+freewifi_monitoring
+```
+
+Open the `.env` file and update:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=freewifi_monitoring
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Make sure the database connection matches your local MySQL configuration.
+
+# Step 7: Create Database Tables
+
+Run Laravel migrations:
+
+```bash
+php artisan migrate
+```
+
+This will create the required tables:
+
+- regions
+- provinces
+- municipalities
+- statuses
+- locations
+
+# Step 8: Run Frontend Assets
+
+Start Vite:
+
+```bash
+npm run dev
+```
+
+Keep this terminal running.
+
+# Step 10: Run the Application Using Laravel Herd
+
+Because the project uses Laravel Herd:
+
+1. Open Laravel Herd.
+2. Make sure the project folder is inside your Herd directory.
+3. Open the project URL provided by Herd.
+
+Example:
+
+```
+http://freewifi-monitoring-system.test
+```
+
+The application should now be accessible in your browser.
+
+# System Usage Guide
+
+## Dashboard
+
+The dashboard displays:
+
+- Total Free Wifi Sites
+- Active Wifi Sites
+- Sites for Renewal
+- Terminated Sites
+
+Users can filter information by:
+
+- Region
+- Province
+- Status
+
+## Location Management
+
+The system stores Free Wifi site information:
+
+- Site Name
+- Barangay
+- Municipality
+- Province
+- Region
+- Status
+- Latitude
+- Longitude
+
+Available actions:
+
+- Add locations
+- Import CSV location data
+- Reset location records
+
+## Location Mapping
+
+Steps:
+
+1. Open Location Mapping.
+3. Select a Region.
+4. View available locations.
+5. View Free Wifi sites on the map.
+
+## Project Status Monitoring
+
+Users can:
+
+- View all Free Wifi projects
+- Monitor project status
+
+# Database Structure
+
+The system follows:
+
+```
+Region
+   |
+   Province
+        |
+        Municipality
+             |
+             Location
+```
+
+# Common Problems
+
+## Database Connection Error
+
+Check:
+
+- MySQL is running
+- TablePlus connection settings
+- `.env` database configuration
+
+## Changes Not Appearing
+
+Run:
+
+```bash
+npm run dev
+```
+
+Clear Laravel cache:
+
+```bash
+php artisan optimize:clear
+```
+
+# Technology Stack
+
+## Backend
+
+- Laravel 12
+- PHP
+- MySQL
+
+## Frontend
+
+- Blade Templates
+- Tailwind CSS
+- JavaScript
+- ApexCharts
+- Tom Select
+- Lucide Icons
+
+## Development Tools
+
+- Laravel Herd
+- TablePlus
+- Composer
+- Node.js
+- NPM
+- Vite
+
+# Developer
+
+Free Wifi Program Monitoring System (FWPMS)
+
+Developed using Laravel 12 and MySQL.

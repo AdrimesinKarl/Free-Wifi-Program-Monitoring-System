@@ -13,43 +13,127 @@
 {{-- Action Buttons --}}
 <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
 
-    <div class="flex flex-wrap items-center gap-3">
-        {{-- Filters --}}
-        <form method="GET" action="{{ route('dashboard') }}" class="flex flex-wrap items-center gap-3">
 
-            <select id="province_id" name="province_id" class="w-64" onchange="this.form.submit()">
-                <option value="">All Provinces</option>
-                @foreach($provinces as $province)
-                    <option value="{{ $province->id }}" {{ $selectedProvince == $province->id ? 'selected' : '' }}>
-                        {{ $province->name }}
-                    </option>
-                @endforeach
-            </select>
+    {{-- Filters --}}
+    <form method="GET"
+          action="{{ route('dashboard') }}"
+          class="flex flex-wrap items-center gap-3">
 
-            <select id="status_id" name="status_id" class="w-64" onchange="this.form.submit()">
-                <option value="">All Statuses</option>
-                @foreach($statuses as $status)
-                    <option value="{{ $status->id }}" {{ $selectedStatus == $status->id ? 'selected' : '' }}>
-                        {{ $status->name }}
-                    </option>
-                @endforeach
-            </select>
 
-        </form>
-    </div>
+        {{-- Region --}}
+        <select
+            id="region_id"
+            name="region_id"
+            class="w-64">
 
-    {{-- Upload CSV Button --}}
-    <form method="POST" action="{{ route('locations.upload') }}" enctype="multipart/form-data" class="flex items-center gap-3" id="uploadForm">
+            <option value="">
+                All Regions
+            </option>
+
+            @foreach($regions as $region)
+
+                <option
+                    value="{{ $region->id }}"
+                    {{ $selectedRegion == $region->id ? 'selected' : '' }}>
+
+                    {{ $region->name }}
+
+                </option>
+
+            @endforeach
+
+        </select>
+
+
+
+        {{-- Province --}}
+        <select
+            id="province_id"
+            name="province_id"
+            class="w-64">
+
+            <option value="">
+                All Provinces
+            </option>
+
+            @foreach($provinces as $province)
+
+                <option
+                    value="{{ $province->id }}"
+                    {{ $selectedProvince == $province->id ? 'selected' : '' }}>
+
+                    {{ $province->name }}
+
+                </option>
+
+            @endforeach
+
+        </select>
+
+
+
+        {{-- Status --}}
+        <select
+            id="status_id"
+            name="status_id"
+            class="w-64">
+
+            <option value="">
+                All Statuses
+            </option>
+
+            @foreach($statuses as $status)
+
+                <option
+                    value="{{ $status->id }}"
+                    {{ $selectedStatus == $status->id ? 'selected' : '' }}>
+
+                    {{ $status->name }}
+
+                </option>
+
+            @endforeach
+
+        </select>
+
+
+    </form>
+
+
+
+    {{-- Upload CSV --}}
+    <form method="POST"
+          action="{{ route('locations.upload') }}"
+          enctype="multipart/form-data"
+          id="uploadForm"
+          class="flex items-center">
+
+
         @csrf
+
+
         <label for="csvFile" class="cursor-pointer">
-            <span class="inline-flex items-center gap-2 px-4 py-2 bg-violet-600 text-white rounded-xl text-sm font-medium shadow-sm hover:bg-violet-700 hover:shadow-md transition-all">
-                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload">
-                    <path d="M12 3v12"/>
-                    <path d="m17 8-5-5-5 5"/>
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                </svg>
+
+            <span class="
+                inline-flex
+                items-center
+                gap-2
+                px-4
+                py-2
+                bg-violet-600
+                text-white
+                rounded-xl
+                text-sm
+                font-medium
+                shadow-sm
+                hover:bg-violet-700
+                transition">
+
                 Upload CSV
+
             </span>
+
+
             <input
                 type="file"
                 name="csv_file"
@@ -57,8 +141,12 @@
                 accept=".csv,.txt"
                 class="hidden"
                 onchange="document.getElementById('uploadForm').submit()">
+
         </label>
+
+
     </form>
+
 
 </div>
 

@@ -1,32 +1,63 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const province = document.querySelector('#province_id');
-    const status = document.querySelector('#status_id');
-    const mapProvince = document.querySelector('#map_province_id');
+    const selects = [
+        '#region_id',
+        '#province_id',
+        '#status_id',
+        '#map_province_id'
+    ];
 
-    if (province) {
-        new TomSelect(province, {
-            create: false,
-            allowEmptyOption: true,
-            persist: false
-        });
-    }
 
-    if (status) {
-        new TomSelect(status, {
-            create: false,
-            allowEmptyOption: true,
-            persist: false
-        });
-    }
+    selects.forEach(selector => {
 
-    if (mapProvince) {
-        new TomSelect(mapProvince, {
+        const element = document.querySelector(selector);
+
+
+        if (!element) return;
+
+
+        // Prevent duplicate TomSelect initialization
+        if (element.tomselect) return;
+
+
+
+        const tom = new TomSelect(element, {
+
             create: false,
+
             allowEmptyOption: true,
-            persist: false
+
+            persist: false,
+
+            controlInput: null
+
         });
-    }
+
+
+
+        tom.on('change', function(value) {
+
+
+            // Update original select value
+            element.value = value;
+
+
+
+            // Submit form automatically
+            const form = element.closest('form');
+
+
+            if (form) {
+
+                form.submit();
+
+            }
+
+
+        });
+
+
+    });
+
 
 });
-

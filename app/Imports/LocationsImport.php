@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Location;
+use App\Models\Region;
 use App\Models\Municipality;
 use App\Models\Province;
 use App\Models\Status;
@@ -19,6 +20,8 @@ class LocationsImport implements ToModel, WithHeadingRow, WithValidation, WithCh
     use SkipsFailures;
 
     protected $statuses;
+
+    protected array $regionCache       = [];
     protected array $provinceCache     = [];
     protected array $municipalityCache = [];
 
@@ -30,7 +33,8 @@ class LocationsImport implements ToModel, WithHeadingRow, WithValidation, WithCh
     public function model(array $row): Location
     {
         $status       = $this->statuses->get(strtolower(trim($row['status'])));
-        $province     = $this->resolveProvince($row['province']);
+        $region       = $this->resolveRegion($row['region']);
+        $province     = $this->resolveProvince($row['province'], $region->id);
         $municipality = $this->resolveMunicipality($row['municipality'], $province->id);
 
         return Location::updateOrCreate(
@@ -47,13 +51,22 @@ class LocationsImport implements ToModel, WithHeadingRow, WithValidation, WithCh
         );
     }
 
-    // Provinces are geographic reference data — fine to create from CSV
-    protected function resolveProvince(string $name): Province
+    // Regions are geographic reference data — fine to create from CSV
+    protected function resolveRegion(string $name): Region
     {
         $key = strtolower(trim($name));
 
-        return $this->provinceCache[$key] ??= Province::firstOrCreate(
+        return $this->regionCache[$key] ??= Region::firstOrCreate(
             ['name' => trim($name)]
+        );
+    }
+    // Provinces are geographic reference data — fine to create from CSV
+    protected function resolveProvince(string $name, int $regionId): Province
+    {
+        $key = strtolower(trim($name)) . '|' . $regionId; // ← scoped to region
+
+        return $this->provinceCache[$key] ??= Province::firstOrCreate(
+            ['name' => trim($name), 'region_id' => $regionId]
         );
     }
 
@@ -71,6 +84,7 @@ class LocationsImport implements ToModel, WithHeadingRow, WithValidation, WithCh
     public function rules(): array
     {
         return [
+            'region'    => ['required', 'string'],
             'site_name' => ['required', 'string', 'max:255'],
             'province'      => ['required', 'string'],
             'municipality'  => ['required', 'string'],
@@ -89,6 +103,7 @@ class LocationsImport implements ToModel, WithHeadingRow, WithValidation, WithCh
     public function customValidationMessages(): array
     {
         return [
+            'region.required'        => 'Region is missing.',
             'site_name.required'     => 'site_name is missing.',
             'province.required'      => 'Province is missing.',
             'latitude.between'       => 'Latitude must be between -90 and 90.',

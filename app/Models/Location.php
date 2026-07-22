@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 class Location extends Model
-    {
+{
     protected $fillable = [
         'site_name',
         'barangay',
@@ -15,20 +16,17 @@ class Location extends Model
         'longitude',
         //'start_date',
         //'renewal_date',
-        ];
-
-    protected $casts = [
-        //'start_date'   => 'date',
-        //'renewal_date' => 'date',
-        'latitude'     => 'decimal:7',
-        'longitude'    => 'decimal:7',
     ];
 
-    protected $with = ['province', 'municipality', 'status'];
-    public function province(): BelongsTo
-    {
-        return $this->belongsTo(Province::class);
-    }
+    protected $casts = [
+        'latitude'  => 'decimal:7',
+        'longitude' => 'decimal:7',
+    ];
+
+    protected $with = [
+        'municipality.province.region',
+        'status'
+    ];
 
     public function municipality(): BelongsTo
     {

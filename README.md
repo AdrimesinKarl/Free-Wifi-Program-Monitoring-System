@@ -236,9 +236,14 @@ php artisan optimize:clear
 - Tailwind CSS
 - JavaScript
 - ApexCharts
+- Leaflet.js
 - Tom Select
-- Lucide Icons
+- SVG Icons
+  
+## Data Import
 
+- Maatwebsite Laravel Excel
+  
 ## Development Tools
 
 - Laravel Herd

@@ -67,32 +67,57 @@ document.addEventListener('DOMContentLoaded', () => {
         markers[location.id] = marker;
 
         marker.bindPopup(`
-            <div style="min-width:240px">
-                <div style="font-weight:600;font-size:15px;margin-bottom:8px;">
-                    📍 ${location.site_name}
-                </div>
+    <div style="min-width:240px">
 
-                <div style="font-size:13px;line-height:1.7">
-                    <div><strong>Barangay:</strong> ${location.barangay}</div>
-                    <div><strong>Municipality:</strong> ${location.municipality?.name ?? '-'}</div>
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:8px;
+            font-weight:600;
+            font-size:15px;
+            margin-bottom:8px;
+        ">
 
-                    <div style="margin-top:10px;">
-                        <span style="
-                            display:inline-block;
-                            background:${color};
-                            color:white;
-                            padding:4px 10px;
-                            border-radius:999px;
-                            font-size:12px;
-                            font-weight:600;
-                        ">
-                            ${location.status?.name ?? 'No Status'}
-                        </span>
-                    </div>
-                </div>
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="18"
+                 height="18"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="${color}"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+                <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+
+            </svg>
+
+            <span>${location.site_name}</span>
+
+        </div>
+
+        <div style="font-size:13px;line-height:1.7">
+            <div><strong>Barangay:</strong> ${location.barangay}</div>
+            <div><strong>Municipality:</strong> ${location.municipality?.name ?? '-'}</div>
+
+            <div style="margin-top:10px;">
+                <span style="
+                    display:inline-block;
+                    background:${color};
+                    color:white;
+                    padding:4px 10px;
+                    border-radius:999px;
+                    font-size:12px;
+                    font-weight:600;
+                ">
+                    ${location.status?.name ?? 'No Status'}
+                </span>
             </div>
-        `);
+        </div>
 
+    </div>
+`);
         // Current locations
         bounds.push(coordinates);
 

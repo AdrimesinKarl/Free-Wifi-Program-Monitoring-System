@@ -15,10 +15,8 @@ class MapController extends Controller
         $selectedRegion   = $request->integer('region_id');
         $selectedProvince = $request->integer('province_id');
 
-
         // Dropdown data
         $regions = Region::orderBy('name')->get();
-
 
         $provinces = Province::when($selectedRegion, function ($query) use ($selectedRegion) {
 
@@ -27,8 +25,6 @@ class MapController extends Controller
         })
         ->orderBy('name')
         ->get();
-
-
 
         // Locations
         $locations = Location::with([
@@ -46,7 +42,6 @@ class MapController extends Controller
 
             })
 
-
             ->when($selectedProvince, function ($query) use ($selectedProvince) {
 
                 $query->whereHas('municipality', function ($q) use ($selectedProvince) {
@@ -57,10 +52,7 @@ class MapController extends Controller
 
             })
 
-
             ->get();
-
-
 
         return view('map', compact(
 

@@ -13,140 +13,52 @@
 {{-- Action Buttons --}}
 <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
 
-
     {{-- Filters --}}
-    <form method="GET"
-          action="{{ route('dashboard') }}"
-          class="flex flex-wrap items-center gap-3">
-
+    <form method="GET" action="{{ route('dashboard') }}" class="flex flex-wrap items-center gap-3">
 
         {{-- Region --}}
-        <select
-            id="region_id"
-            name="region_id"
-            class="w-64">
-
-            <option value="">
-                All Regions
-            </option>
-
+        <select id="region_id" name="region_id" class="w-64">
+            <option value="">All Regions</option>
             @foreach($regions as $region)
-
-                <option
-                    value="{{ $region->id }}"
-                    {{ $selectedRegion == $region->id ? 'selected' : '' }}>
-
+                <option value="{{ $region->id }}" {{ $selectedRegion == $region->id ? 'selected' : '' }}>
                     {{ $region->name }}
-
                 </option>
-
             @endforeach
-
         </select>
-
-
 
         {{-- Province --}}
-        <select
-            id="province_id"
-            name="province_id"
-            class="w-64">
-
-            <option value="">
-                All Provinces
-            </option>
-
+        <select id="province_id" name="province_id" class="w-64">
+            <option value="">All Provinces</option>
             @foreach($provinces as $province)
-
-                <option
-                    value="{{ $province->id }}"
-                    {{ $selectedProvince == $province->id ? 'selected' : '' }}>
-
+                <option value="{{ $province->id }}" {{ $selectedProvince == $province->id ? 'selected' : '' }}>
                     {{ $province->name }}
-
                 </option>
-
             @endforeach
-
         </select>
-
-
 
         {{-- Status --}}
-        <select
-            id="status_id"
-            name="status_id"
-            class="w-64">
-
-            <option value="">
-                All Statuses
-            </option>
-
+        <select id="status_id" name="status_id" class="w-64">
+            <option value="">All Statuses</option>
             @foreach($statuses as $status)
-
-                <option
-                    value="{{ $status->id }}"
-                    {{ $selectedStatus == $status->id ? 'selected' : '' }}>
-
+                <option value="{{ $status->id }}" {{ $selectedStatus == $status->id ? 'selected' : '' }}>
                     {{ $status->name }}
-
                 </option>
-
             @endforeach
-
         </select>
 
-
     </form>
-
-
 
     {{-- Upload CSV --}}
-    <form method="POST"
-          action="{{ route('locations.upload') }}"
-          enctype="multipart/form-data"
-          id="uploadForm"
-          class="flex items-center">
-
-
+    <form method="POST" action="{{ route('locations.upload') }}" enctype="multipart/form-data" id="uploadForm" class="flex items-center">
         @csrf
-
-
         <label for="csvFile" class="cursor-pointer">
-
-            <span class="
-                inline-flex
-                items-center
-                gap-2
-                px-4
-                py-2
-                bg-violet-600
-                text-white
-                rounded-xl
-                text-sm
-                font-medium
-                shadow-sm
-                hover:bg-violet-700
-                transition">
-
+            <span class="inline-flex items-center gap-2 px-4 py-2 bg-violet-600 text-white rounded-xl text-sm font-medium shadow-sm hover:bg-violet-700 transition">
                 Upload CSV
-
             </span>
-
-
-            <input
-                type="file"
-                name="csv_file"
-                id="csvFile"
-                accept=".csv,.txt"
-                class="hidden"
+            <input type="file" name="csv_file" id="csvFile" accept=".csv,.txt" class="hidden"
                 onchange="document.getElementById('uploadForm').submit()">
-
         </label>
-
-
     </form>
-
 
 </div>
 
@@ -231,10 +143,8 @@
             </strong>
         @endif
     </p>
-    <div id="locationChart" data-chart='@json($chartData)'>
-
+    <div id="locationChart" data-chart='@json($chartData)'></div>
 </div>
-
 
 @push('scripts')
 @vite(['resources/js/charts/wifiChart.js'])
@@ -245,12 +155,7 @@
     <form method="POST" action="{{ route('locations.reset') }}" onsubmit="return confirm('Reset all locations? This cannot be undone.')" class="inline">
         @csrf
         <button type="submit"
-                class="px-4 py-2 text-sm
-                text-red-700 dark:text-red-400
-                hover:text-red-800 dark:hover:text-red-300
-                hover:bg-red-50 dark:hover:bg-red-950
-                rounded-lg transition-colors
-                border border-red-200 dark:border-red-800">
+                class="px-4 py-2 text-sm text-red-700 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-950 rounded-lg transition-colors border border-red-200 dark:border-red-800">
             Reset All Locations
         </button>
     </form>

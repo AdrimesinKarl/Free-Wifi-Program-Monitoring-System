@@ -9,26 +9,18 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-  public function up(): void
-{
-    Schema::table('provinces', function (Blueprint $table) {
+    public function up(): void
+    {
+        Schema::table('provinces', function (Blueprint $table) {
+            $table->foreignId('region_id')->after('id')->constrained()->cascadeOnDelete();
+        });
+    }
 
-        $table->foreignId('region_id')
-              ->after('id')
-              ->constrained()
-              ->cascadeOnDelete();
-
-    });
-}
-
-
-public function down(): void
-{
-    Schema::table('provinces', function (Blueprint $table) {
-
-        $table->dropForeign(['region_id']);
-        $table->dropColumn('region_id');
-
-    });
-}
+    public function down(): void
+    {
+        Schema::table('provinces', function (Blueprint $table) {
+            $table->dropForeign(['region_id']);
+            $table->dropColumn('region_id');
+        });
+    }
 };

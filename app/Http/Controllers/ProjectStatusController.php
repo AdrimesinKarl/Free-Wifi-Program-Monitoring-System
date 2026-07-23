@@ -16,7 +16,12 @@ class ProjectStatusController extends Controller
 
         $statuses = Status::orderBy('name')->get();
 
-        $provinces = Province::orderBy('name')->get();
+        //this will get the selected province based on the selected region if the "region_id" is present
+        $provinces = Province::orderBy('name')
+        ->when($request->region_id, function ($q) use ($request) {
+            $q->where('region_id', $request->region_id);
+        })
+        ->get();
 
 
         $locations = Location::with([

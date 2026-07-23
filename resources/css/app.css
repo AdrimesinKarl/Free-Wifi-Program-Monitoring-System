@@ -14,9 +14,7 @@
     flex-shrink: 0;
 }
 
-/* =========================
-   Control
-========================= */
+/* Control */
 
 .ts-control {
     border: 1px solid #334155 !important;
@@ -42,9 +40,7 @@
     transition: all 0.2s ease;
 }
 
-/* =========================
-   Arrow
-========================= */
+/* Arrow */
 
 .ts-wrapper.single .ts-control::after {
 
@@ -66,9 +62,7 @@
     border-color: #7C3AED transparent transparent;
 }
 
-/* =========================
-   Focus
-========================= */
+/* Focus */
 
 .ts-control.focus {
     border-color: #7C3AED !important;
@@ -76,9 +70,7 @@
     box-shadow: 0 0 0 3px rgba(124,58,237,.15);
 }
 
-/* =========================
-   Dropdown
-========================= */
+/* Dropdown */
 
 .ts-dropdown {
 
@@ -95,9 +87,7 @@
     box-shadow: 0 10px 25px rgba(0,0,0,.25);
 }
 
-/* =========================
-   Options
-========================= */
+/* Options */
 
 .ts-dropdown .option {
 
@@ -141,18 +131,14 @@
     color: white !important;
 }
 
-/* =========================
-   Input
-========================= */
+/* Input */
 
 .ts-control input {
 
     caret-color: transparent;
 }
 
-/* =========================
-   Text overflow
-========================= */
+/* Text overflow */
 
 .ts-control .item {
 
@@ -165,9 +151,7 @@
     white-space: nowrap;
 }
 
-/* =========================
-Hide Scrollbar
- */
+/* Hide scrollbar */
 
 .ts-dropdown-content {
 

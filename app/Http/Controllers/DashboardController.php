@@ -18,7 +18,6 @@ class DashboardController extends Controller
         $selectedProvince = $request->integer('province_id');
         $selectedStatus   = $request->integer('status_id');
 
-
         // Dropdown data
         $regions = Region::orderBy('name')->get();
 
@@ -31,11 +30,8 @@ class DashboardController extends Controller
 
         $statuses = Status::orderBy('name')->get();
 
-
-
         // Location query
         $query = Location::query();
-
 
         // Region filter
         if ($selectedRegion) {
@@ -46,7 +42,6 @@ class DashboardController extends Controller
 
         }
 
-
         // Province filter
         if ($selectedProvince) {
 
@@ -56,15 +51,12 @@ class DashboardController extends Controller
 
         }
 
-
         // Status filter
         if ($selectedStatus) {
 
             $query->where('status_id', $selectedStatus);
 
         }
-
-
 
         // Counters
         $total = (clone $query)->count();
@@ -86,8 +78,6 @@ class DashboardController extends Controller
                 $q->where('name', 'Terminated');
             })
             ->count();
-
-
 
         // Chart data
         if ($selectedProvince) {
@@ -114,7 +104,6 @@ class DashboardController extends Controller
                 })
                 ->values();
 
-
         } else {
 
             $chartData = Province::whereHas('municipalities.locations')
@@ -139,7 +128,6 @@ class DashboardController extends Controller
                         })
                         ->count();
 
-
                     return [
                         'label' => $province->name,
                         'count' => (int) $count
@@ -149,7 +137,6 @@ class DashboardController extends Controller
                 ->values();
 
         }
-
 
         return view('dashboard', compact(
 

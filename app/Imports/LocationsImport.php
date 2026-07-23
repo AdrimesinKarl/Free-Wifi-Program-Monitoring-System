@@ -43,15 +43,13 @@ class LocationsImport implements ToModel, WithHeadingRow, WithValidation, WithCh
                 'barangay'        => $row['barangay'],
                 'municipality_id' => $municipality->id,
                 'status_id'       => $status->id,
-                'latitude'        => $row['latitude']     ?? null,
-                'longitude'       => $row['longitude']    ?? null,
-                //'start_date'      => $row['start_date']   ?? null,
-                //'renewal_date'    => $row['renewal_date'] ?? null,
+                'latitude'        => $row['latitude']  ?? null,
+                'longitude'       => $row['longitude'] ?? null,
             ]
         );
     }
 
-    // Regions are geographic reference data — fine to create from CSV
+    // Creates region from CSV if it doesn't exist
     protected function resolveRegion(string $name): Region
     {
         $key = strtolower(trim($name));
@@ -60,18 +58,18 @@ class LocationsImport implements ToModel, WithHeadingRow, WithValidation, WithCh
             ['name' => trim($name)]
         );
     }
-    // Provinces are geographic reference data — fine to create from CSV
+
+    // Scoped to region to avoid name collisions across regions
     protected function resolveProvince(string $name, int $regionId): Province
     {
-        $key = strtolower(trim($name)) . '|' . $regionId; // ← scoped to region
+        $key = strtolower(trim($name)) . '|' . $regionId;
 
         return $this->provinceCache[$key] ??= Province::firstOrCreate(
             ['name' => trim($name), 'region_id' => $regionId]
         );
     }
 
-    // Every municipality must belong to a province (DB requires province_id) -
-    // resolve it scoped to that province, not just by name alone
+    // Scoped to province since municipality names aren't unique across provinces
     protected function resolveMunicipality(string $name, int $provinceId): Municipality
     {
         $key = strtolower(trim($name)) . '|' . $provinceId;
@@ -84,12 +82,12 @@ class LocationsImport implements ToModel, WithHeadingRow, WithValidation, WithCh
     public function rules(): array
     {
         return [
-            'region'    => ['required', 'string'],
-            'site_name' => ['required', 'string', 'max:255'],
-            'province'      => ['required', 'string'],
-            'municipality'  => ['required', 'string'],
-            'barangay'      => ['required', 'string'],
-            'status'        => ['required', 'string', function ($attribute, $value, $fail) {
+            'region'       => ['required', 'string'],
+            'site_name'    => ['required', 'string', 'max:255'],
+            'province'     => ['required', 'string'],
+            'municipality' => ['required', 'string'],
+            'barangay'     => ['required', 'string'],
+            'status'       => ['required', 'string', function ($attribute, $value, $fail) {
                 if (!$this->statuses->has(strtolower(trim($value)))) {
                     $valid = $this->statuses->keys()->join(', ');
                     $fail("Status \"{$value}\" is not recognised. Allowed: {$valid}.");
@@ -103,11 +101,11 @@ class LocationsImport implements ToModel, WithHeadingRow, WithValidation, WithCh
     public function customValidationMessages(): array
     {
         return [
-            'region.required'        => 'Region is missing.',
-            'site_name.required'     => 'site_name is missing.',
-            'province.required'      => 'Province is missing.',
-            'latitude.between'       => 'Latitude must be between -90 and 90.',
-            'longitude.between'      => 'Longitude must be between -180 and 180.',
+            'region.required'    => 'Region is missing.',
+            'site_name.required' => 'site_name is missing.',
+            'province.required'  => 'Province is missing.',
+            'latitude.between'   => 'Latitude must be between -90 and 90.',
+            'longitude.between'  => 'Longitude must be between -180 and 180.',
         ];
     }
 

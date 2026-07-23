@@ -14,7 +14,7 @@ Before installing the system, make sure the computer has the following installed
 - Composer
 - Node.js
 - NPM
-- TablePlus(for database management)
+- TablePlus (for database management)
 - MYSQL
 
 # 2. Project Setup
@@ -247,9 +247,3 @@ php artisan optimize:clear
 - Node.js
 - NPM
 - Vite
-
-# Developer
-
-Free Wifi Program Monitoring System (FWPMS)
-
-Developed using Laravel 12 and MySQL.

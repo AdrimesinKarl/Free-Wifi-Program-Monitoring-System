@@ -25,16 +25,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const color = location.status?.color ?? '#64748b';
 
-        const marker = L.circleMarker(
-            [Number(location.latitude), Number(location.longitude)],
-            {
-                radius: 9,
-                weight: 3,
-                color: '#ffffff',
-                fillColor: color,
-                fillOpacity: 1
-            }
-        ).addTo(map);
+        const pinIcon = L.divIcon({
+    className: '',
+    html: `
+        <div style="
+            width:28px;
+            height:28px;
+            background:${color};
+            border:3px solid #fff;
+            border-radius:50% 50% 50% 0;
+            transform:rotate(-45deg);
+            box-shadow:0 2px 8px rgba(0,0,0,.35);
+            position:relative;
+        ">
+            <div style="
+                width:10px;
+                height:10px;
+                background:#fff;
+                border-radius:50%;
+                position:absolute;
+                top:6px;
+                left:6px;
+            "></div>
+        </div>
+    `,
+    iconSize: [28, 28],
+    iconAnchor: [14, 28],
+    popupAnchor: [0, -28]
+});
+
+const marker = L.marker(
+    [Number(location.latitude), Number(location.longitude)],
+    {
+        icon: pinIcon
+    }
+).addTo(map);
 
         markers[location.id] = marker;
 

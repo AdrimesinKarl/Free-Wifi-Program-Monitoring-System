@@ -7,7 +7,7 @@
     {{-- Page Header --}}
     <div class="mb-6">
         <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Location Mapping</h1>
-        <p class="text-slate-500 dark:text-slate-400">View FreeWiFi locations on an interactive map.</p>
+        <p class="text-slate-500 dark:text-slate-400">View Free Wi-Fi locations on an interactive map.</p>
     </div>
 
     {{-- Filters --}}
@@ -33,6 +33,11 @@
             @endforeach
         </select>
 
+        {{-- Reset --}}
+        <a href="{{ route('map') }}"
+            class="px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+            Reset Filters
+        </a>
     </form>
 
     {{-- Content --}}

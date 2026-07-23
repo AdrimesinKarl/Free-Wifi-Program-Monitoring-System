@@ -16,7 +16,6 @@
     "dependencies": {
         "apexcharts": "^5.16.0",
         "leaflet": "^1.9.4",
-        "lucide": "^1.24.0",
         "select": "^1.1.2",
         "tom": "^0.4.1",
         "tom-select": "^2.6.2"

@@ -6,8 +6,8 @@
 
     {{-- Page Header --}}
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100">FreeWifi Project Status</h1>
-        <p class="text-slate-500 dark:text-slate-400">View and manage all FreeWiFi project locations.</p>
+        <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Free Wi-Fi Project Status</h1>
+        <p class="text-slate-500 dark:text-slate-400">View and manage all Free Wi-Fi project locations.</p>
     </div>
 
     {{-- Filters --}}
@@ -56,7 +56,7 @@
 
             <a href="{{ route('project-status') }}"
                class="px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition">
-                Reset
+                Reset Filters
             </a>
 
         </form>

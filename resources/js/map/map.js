@@ -17,49 +17,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const locations = JSON.parse(mapElement.dataset.locations || '[]');
 
     const bounds = [];
+    const allLocationsBounds = []; // ADD THIS
     const markers = {};
 
     // Marker creation
     locations.forEach(location => {
         if (!location.latitude || !location.longitude) return;
 
+        const coordinates = [
+            Number(location.latitude),
+            Number(location.longitude)
+        ];
+
         const color = location.status?.color ?? '#64748b';
 
         const pinIcon = L.divIcon({
-    className: '',
-    html: `
-        <div style="
-            width:28px;
-            height:28px;
-            background:${color};
-            border:3px solid #fff;
-            border-radius:50% 50% 50% 0;
-            transform:rotate(-45deg);
-            box-shadow:0 2px 8px rgba(0,0,0,.35);
-            position:relative;
-        ">
-            <div style="
-                width:10px;
-                height:10px;
-                background:#fff;
-                border-radius:50%;
-                position:absolute;
-                top:6px;
-                left:6px;
-            "></div>
-        </div>
-    `,
-    iconSize: [28, 28],
-    iconAnchor: [14, 28],
-    popupAnchor: [0, -28]
-});
+            className: '',
+            html: `
+                <div style="
+                    width:28px;
+                    height:28px;
+                    background:${color};
+                    border:3px solid #fff;
+                    border-radius:50% 50% 50% 0;
+                    transform:rotate(-45deg);
+                    box-shadow:0 2px 8px rgba(0,0,0,.35);
+                    position:relative;
+                ">
+                    <div style="
+                        width:10px;
+                        height:10px;
+                        background:#fff;
+                        border-radius:50%;
+                        position:absolute;
+                        top:6px;
+                        left:6px;
+                    "></div>
+                </div>
+            `,
+            iconSize: [28, 28],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -28]
+        });
 
-const marker = L.marker(
-    [Number(location.latitude), Number(location.longitude)],
-    {
-        icon: pinIcon
-    }
-).addTo(map);
+        const marker = L.marker(coordinates, {
+            icon: pinIcon
+        }).addTo(map);
 
         markers[location.id] = marker;
 
@@ -68,9 +71,11 @@ const marker = L.marker(
                 <div style="font-weight:600;font-size:15px;margin-bottom:8px;">
                     📍 ${location.site_name}
                 </div>
+
                 <div style="font-size:13px;line-height:1.7">
                     <div><strong>Barangay:</strong> ${location.barangay}</div>
                     <div><strong>Municipality:</strong> ${location.municipality?.name ?? '-'}</div>
+
                     <div style="margin-top:10px;">
                         <span style="
                             display:inline-block;
@@ -88,12 +93,19 @@ const marker = L.marker(
             </div>
         `);
 
-        bounds.push([Number(location.latitude), Number(location.longitude)]);
+        // Current locations
+        bounds.push(coordinates);
+
+        // Store all locations
+        allLocationsBounds.push(coordinates);
     });
 
-    // Auto fit locations
+    // Auto fit current locations
     if (bounds.length) {
-        map.fitBounds(bounds, { padding: [40, 40] });
+        map.flyToBounds(bounds, {
+            padding: [60, 60],
+            duration: 1.2
+        });
     }
 
     // Reset button
@@ -104,12 +116,25 @@ const marker = L.marker(
             // Close popup
             map.closePopup();
 
-            // Reset to default view
-            map.flyTo(defaultCenter, defaultZoom, { animate: true, duration: 1.2 });
+            // Return to ALL locations
+            if (allLocationsBounds.length) {
+                map.flyToBounds(allLocationsBounds, {
+                    padding: [60, 60],
+                    duration: 1.2
+                });
+            } else {
+                map.flyTo(defaultCenter, defaultZoom, {
+                    animate: true,
+                    duration: 1.2
+                });
+            }
 
             // Remove highlighted row
             document.querySelectorAll('[data-location-row]').forEach(row => {
-                row.classList.remove('bg-violet-50', 'dark:bg-violet-950');
+                row.classList.remove(
+                    'bg-violet-50',
+                    'dark:bg-violet-950'
+                );
             });
         });
     }
@@ -120,28 +145,37 @@ const marker = L.marker(
 
         if (!marker) return;
 
-        // Remove previous highlight
         document.querySelectorAll('[data-location-row]').forEach(row => {
-            row.classList.remove('bg-violet-50', 'dark:bg-violet-950');
+            row.classList.remove(
+                'bg-violet-50',
+                'dark:bg-violet-950'
+            );
         });
 
-        // Highlight selected row
-        const selectedRow = document.querySelector(`[data-location-row="${id}"]`);
+        const selectedRow = document.querySelector(
+            `[data-location-row="${id}"]`
+        );
 
         if (selectedRow) {
-            selectedRow.classList.add('bg-violet-50', 'dark:bg-violet-950');
-            selectedRow.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            selectedRow.classList.add(
+                'bg-violet-50',
+                'dark:bg-violet-950'
+            );
+
+            selectedRow.scrollIntoView({
+                block: 'nearest',
+                behavior: 'smooth'
+            });
         }
 
-        // Zoom to marker
-        map.flyTo(marker.getLatLng(), 16, { animate: true, duration: 1.2 });
-
-        // Pulse animation
-        marker.setStyle({ radius: 13 });
-
-        setTimeout(() => {
-            marker.setStyle({ radius: 9 });
-        }, 600);
+        map.flyTo(
+            marker.getLatLng(),
+            16,
+            {
+                animate: true,
+                duration: 1.2
+            }
+        );
 
         marker.openPopup();
     };

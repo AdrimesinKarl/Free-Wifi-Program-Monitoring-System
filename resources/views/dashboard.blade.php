@@ -7,7 +7,7 @@
 {{-- Page Header --}}
 <div class="mb-6">
     <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Dashboard</h1>
-    <p class="text-slate-500 dark:text-slate-400">Welcome to the Free WiFi Program Monitoring dashboard</p>
+    <p class="text-slate-500 dark:text-slate-400">Welcome to the Free Wi-Fi Program Monitoring Dashboard</p>
 </div>
 
 {{-- Action Buttons --}}
@@ -46,6 +46,11 @@
             @endforeach
         </select>
 
+        {{-- Reset --}}
+        <a href="{{ route('dashboard') }}"
+            class="inline-flex items-center gap-2 h-11 px-5 rounded-xl border border-slate-300 dark:border-slate-700 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+            Reset Filters
+        </a>
     </form>
 
     {{-- Upload CSV --}}

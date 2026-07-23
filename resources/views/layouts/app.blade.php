@@ -27,7 +27,7 @@
                 <path d="M8.5 16.429a5 5 0 0 1 7 0"/>
             </svg><br>
             <span class="font-bold text-slate-900 dark:text-slate-100 text-base leading-tight">
-            Free Wifi<br>Monitoring System
+            Free Wi-Fi<br>Monitoring System
             </span>
     </div>
     </div>
@@ -97,7 +97,7 @@
                 <path d="M8.5 16.429a5 5 0 0 1 7 0"/>
 
             </svg>
-            <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">Free Wifi Program Monitoring System </span>
+            <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">Free Wi-Fi Program Monitoring System </span>
         </header>
 
         {{-- Page Content --}}

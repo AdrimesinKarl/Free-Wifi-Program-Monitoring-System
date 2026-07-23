@@ -14,7 +14,7 @@ Before installing the system, make sure the computer has the following installed
 - Composer
 - Node.js
 - NPM
-- TablePlus(for database management)
+- TablePlus (for database management)
 - MYSQL
 
 # 2. Project Setup

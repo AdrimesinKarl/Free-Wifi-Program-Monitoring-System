@@ -247,9 +247,3 @@ php artisan optimize:clear
 - Node.js
 - NPM
 - Vite
-
-# Developer
-
-Free Wifi Program Monitoring System (FWPMS)
-
-Developed using Laravel 12 and MySQL.
